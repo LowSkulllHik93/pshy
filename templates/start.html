@@ -19,27 +19,36 @@
 </html>
 <div id="result" class="row">
     <div class="col-sm-4">
-        <h5>История загаданных чисел:</h5>
-        <div id="answerlist">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    Загаданное число: {{ mstnmb }}<br>
-                    Ранее загаданные числа:
-                    {% for item in history_number %}
-                        <div>Число: {{ item }}</div>
-                    {% endfor %}
-                </li>
-            </ul>
-        </div>
-        <div id="answerlist">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    История ответов экстрасенсов:
-                    {% for name, answer in all_answer.items %}
-                        <div>{{ name }} отвечал: {% cycle history_first history_second %}</div>
-                    {% endfor %}
-                </li>
-            </ul>
+        <div>
+            <div class="alert alert-info">
+                Загадайте двухзначное число у себя в голове и нажмите кнопку старт.
+            </div>
+            <div class="col-sm-6 center-block">
+                <button id="target" class="btn btn-success center-block">Старт
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
+{% block javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $("#target").on("click", function () {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'start' %}",
+                success: function (result) {
+                    $('#result').html(result)
+                    //debugger;
+                    //alert("it's working");
+                },
+                error: function (data) {
+                    //debugger;
+                    //alert("Error detected");
+                }
+            });
+            $(this).html('Work')
+        });
+    </script>
+{% endblock javascript %}

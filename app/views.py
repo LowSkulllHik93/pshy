@@ -1,12 +1,43 @@
 import random
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 
-class Main:
+class Main():
     def index(self):
         if self.session.session_key == None:
             self.session.cycle_key()
+        return render(self, 'start.html')
+
+    def start(self):
         return render(self, 'index.html')
+
+
+class MagicPeople1():
+
+    def __init__(self, name):
+        self.name = name
+        self.answer_history = []
+
+    def answer(self):
+        answer = self.random_number()
+        self.answer_history.append(answer)
+        return answer
+
+    def random_number(self):
+        return random.randint(10, 99)
+
+
+
+
+
+
+
+
+
+
+"""
+
 
 class MagicPeople(Main):
     def magic(self):
@@ -44,11 +75,13 @@ class Functions(MagicPeople):
         return render(self, 'index.html', context)
 
     def check(self):
-        """ Получение данных для вывода на страницу"""
+        """ #Получение данных для вывода на страницу"""
+"""
         mstnmb = int(self.GET['fnmb'])
         magic_answer = self.session.get('magicanswer')
         magic_people = self.session.get('magicpeople')
-        """ Ранее загаданные числа """
+        """ #Ранее загаданные числа """
+"""
         history_of_number = []
         history_of_number_all = self.session.get('history_of_number')
         len_history = len(str(history_of_number_all))
@@ -66,7 +99,8 @@ class Functions(MagicPeople):
         else:
             history_of_number = history_of_number_all
             history_of_number.append(mstnmb)
-        """История ответов экстрасенсов"""
+        """#История ответов экстрасенсов"""
+"""
         history_of_answer = []
         history_of_number_all_answer = self.session.get('history_of_answer')
         if history_of_number_all_answer == None:
@@ -94,7 +128,8 @@ class Functions(MagicPeople):
             self.session['history_first'] = history_first
             history_second.append(magic_answer[1])
             self.session['history_second'] = history_second
-        """Достоверность и колличесво угадывания"""
+        """#Достоверность и колличесво угадывания"""
+"""
         true_answer = self.session.get('true_answer', 0)
         true_answer2 = self.session.get('true_answer2', 0)
         right_answer = self.session.get('right_answer', 0)
@@ -136,3 +171,4 @@ class Functions(MagicPeople):
             'history_second': history_second,
         }
         return render(self, 'index.html', context)
+"""
