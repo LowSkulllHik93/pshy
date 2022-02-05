@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Тестирование экстрасенсов</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/css/Style.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../static/script/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../static/script/jquery.cookie.js"></script>
+</head>
+<body>
+<div class="container">
+</div>
+<script type="text/javascript" src="../static/script/senapp.js"></script>
+</body>
+</html>
+<div id="result" class="row">
+    <div class="col-sm-4">
+        <h5>История загаданных чисел:</h5>
+        <div id="answerlist">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Загаданное число: {{ mstnmb }}<br>
+                    Ранее загаданные числа:
+                    {% for item in history_number %}
+                        <div>Число: {{ item }}</div>
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
+        <div id="answerlist">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    История ответов экстрасенсов:
+                    {% for name, answer in all_answer.items %}
+                        <div>{{ name }} отвечал: {% cycle history_first history_second %}</div>
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
