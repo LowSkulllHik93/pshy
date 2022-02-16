@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Тестирование экстрасенсов</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/css/Style.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../static/script/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../static/script/jquery.cookie.js"></script>
+</head>
+<body>
+<script type="text/javascript" src="../static/script/senapp.js"></script>
+</body>
+</html>
+<ul>
+    <li>
+        Вы загадали: <strong>{{ user_numbers | last }}</strong> <br>
+        Загаданные числа: {{ user_numbers }}
+    </li>
+    {% for item in magicpeople %}
+        <li>
+            {% with  last_num=item.magic_number|last %}<br>
+                Экстрасенс: {{ item.magic_name }} - предположил, что это число
+                <strong>{{ last_num.answer_history }}</strong><br>
+            {% endwith %}
+            Предполагаемые числа:
+            {% for i in item.magic_number %}
+                {{ i.answer_history }},
+            {% endfor %}<br>
+            Достоверность: {{ item.magic_trust }}<br>
+        </li>
+    {% endfor %}
+</ul>
+<a href={% url 'index' %}>Еще раз?</a>

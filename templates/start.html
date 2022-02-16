@@ -23,32 +23,15 @@
             <div class="alert alert-info">
                 Загадайте двухзначное число у себя в голове и нажмите кнопку старт.
             </div>
-            <div class="col-sm-6 center-block">
-                <button id="target" class="btn btn-success center-block">Старт
+            <div class="col-sm-4 center-block">
+            </div>
+            <div class="col-sm-4 center-block">
+                <form action="index/" method="post">
+                    {% csrf_token %}
+                    <button id="target" class="btn btn-success center-block">Старт
                 </button>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
-{% block javascript %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $("#target").on("click", function () {
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'start' %}",
-                success: function (result) {
-                    $('#result').html(result)
-                    //debugger;
-                    //alert("it's working");
-                },
-                error: function (data) {
-                    //debugger;
-                    //alert("Error detected");
-                }
-            });
-            $(this).html('Work')
-        });
-    </script>
-{% endblock javascript %}
