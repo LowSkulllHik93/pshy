@@ -16,6 +16,7 @@ def input_number(request):
     name = request.session['psy']
     nubmer = int(request.POST['number'])
     request.session['psy_num'].append(nubmer)
+    request.session.modified = True
     responce = {'username': name,
                 'user_numbers': request.session['psy_num'],
                 'magicpeople': magicpeople.check(nubmer,name),
