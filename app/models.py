@@ -15,6 +15,8 @@ class MagicPeople:
 
     def answer_random(self, name):
         self.answer[name] = random.randint(10, 99)
+        all_answer = self.answer_history.setdefault(name, [])
+        all_answer.append({'answer_history': self.answer[name]})
 
     def raiting(self, name):
         return self.trust_value.setdefault(name, 0)
@@ -23,8 +25,6 @@ class MagicPeople:
         self.trust_value[name] = self.raiting(name) + number
 
     def check(self, user_answer, name):
-        all_answer = self.answer_history.setdefault(name, [])
-        all_answer.append({'answer_history': self.answer[name]})
         if user_answer == self.answer[name]:
             self.change_raiting(name, 1)
         else:
@@ -43,10 +43,14 @@ class Controller:
 
         } for item in self.magicpeople]
 
-    def add_answer(self, number, name):
+    def check(self, number, name):
+        for item in self.magicpeople:
+            item.check(number, name)
+        return self.add_all(name)
+
+    def add_answer(self, name):
         for item in self.magicpeople:
             item.answer_random(name)
-            item.check(number, name)
         return self.add_all(name)
 
     def add_all(self, name):
@@ -54,4 +58,4 @@ class Controller:
             'magic_name': item.name,
             'magic_number': item.answer_history.get(name),
             'magic_trust': item.raiting(name),
-        }for item in self.magicpeople]
+        } for item in self.magicpeople]

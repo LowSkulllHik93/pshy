@@ -15,19 +15,24 @@
 <script type="text/javascript" src="../static/script/senapp.js"></script>
 </body>
 </html>
-<div id="result1" class="row">
-    <div class="col-sm-5">
-        <div class="alert alert-info">
-            Введите загаданное число.
-        </div>
-        <div class="col-sm-6 center-block">
-            <form action="../answer/" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button id="target2" class="btn btn-success center-block">Проверка!</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-
+<ul>
+    <li>
+        </form>
+        Вы загадали: <strong>{{ user_numbers | last }}</strong> <br>
+        Загаданные числа: {{ user_numbers }}
+    </li>
+    {% for item in magicpeople %}
+        <li>
+            {% with  last_num=item.magic_number|last %}<br>
+                Экстрасенс: {{ item.magic_name }} - предположил, что это число
+                <strong>{{ last_num.answer_history }}</strong><br>
+            {% endwith %}
+            Предполагаемые числа:
+            {% for i in item.magic_number %}
+                {{ i.answer_history }},
+            {% endfor %}<br>
+            Достоверность: {{ item.magic_trust }}<br>
+        </li>
+    {% endfor %}
+</ul>
+<a href={% url 'answer' %}>Еще раз?</a>

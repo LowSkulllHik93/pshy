@@ -17,8 +17,11 @@
 </html>
 <ul>
     <li>
-        Вы загадали: <strong>{{ user_numbers | last }}</strong> <br>
-        Загаданные числа: {{ user_numbers }}
+        <form action="../index/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button id="target2" class="btn btn-success center-block">Проверка!</button>
+        </form>
     </li>
     {% for item in magicpeople %}
         <li>
@@ -34,4 +37,3 @@
         </li>
     {% endfor %}
 </ul>
-<a href={% url 'index' %}>Еще раз?</a>

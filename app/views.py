@@ -13,23 +13,27 @@ def start(request):
     return render (request, 'start.html')
 
 def input_number(request):
+    name = request.session['psy']
+    nubmer = int(request.POST['number'])
+    request.session['psy_num'].append(nubmer)
+    responce = {'username': name,
+                'user_numbers': request.session['psy_num'],
+                'magicpeople': magicpeople.check(nubmer,name),
+                }
+    return render(request, 'index.html', context=responce)
+
+def answer(request):
+    name = request.session['psy']
+    request.session.modified = True
     form = InputNumberForm()
     if request.method == 'POST':
         form = InputNumberForm(request.POST)
         if form.is_valid():
-            return render(request, 'index.html', {'form': form})
+            return render(request, 'index.html' , {'form': form})
         else:
             form = InputNumberForm()
-    return render(request, 'index.html', {'form': form})
-
-def answer(request):
-    name = request.session['psy']
-    nubmer = int(request.POST['number'])
-    request.session['psy_num'].append(nubmer)
-    request.session.modified = True
     responce = {'username': name,
-                'user_numbers': request.session['psy_num'],
-                'magicpeople': magicpeople.add_answer(nubmer, name)
+                'magicpeople': magicpeople.add_answer(name),
+                'form': form
                 }
-
     return render(request, 'answer.html', context=responce)
